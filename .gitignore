@@ -1,0 +1,13 @@
+# dependencies
+node_modules/
+# next.js build
+.next/
+out/
+# env & secrets
+.env.local
+.env*.local
+# typescript / misc
+*.tsbuildinfo
+.DS_Store
+# preview artefacts
+preview-shots/
