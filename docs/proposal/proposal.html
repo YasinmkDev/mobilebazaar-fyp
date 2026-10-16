@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FYP Proposal — MobileBazaar</title>
+<style>
+  @page {
+    size: A4;
+    margin: 1in 1in 1in 1.5in;
+    @top-right { content: counter(page); font-family: "Times New Roman", Times, serif; font-size: 11pt; }
+  }
+  @page :first { @top-right { content: none; } }
+  body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.9; color: #000; text-align: justify; }
+  .title-page { text-align: center; line-height: 1.6; }
+  .title-page .ptitle { font-size: 14pt; text-transform: uppercase; margin-top: 0.6in; line-height: 1.5; }
+  .monogram { border: 1.5px dashed #666; color: #555; width: 1.25in; height: 1.5in; margin: 0.25in auto; display: flex; align-items: center; justify-content: center; font-size: 9pt; padding: 6px; }
+  .tp-label { font-size: 12pt; text-transform: uppercase; margin-top: 0.28in; }
+  .tp-name { font-size: 12pt; text-transform: uppercase; }
+  .tp-dept { font-size: 16pt; font-weight: bold; text-transform: uppercase; margin-top: 0.55in; line-height: 1.5; }
+  h1.sec { font-size: 12pt; font-weight: bold; text-transform: uppercase; margin: 22px 0 6px 0; page-break-after: avoid; }
+  h2.sub { font-size: 12pt; font-weight: bold; margin: 14px 0 4px 0; page-break-after: avoid; }
+  p { margin: 0 0 8px 0; }
+  ul, ol { margin: 4px 0 10px 0; }
+  li { margin-bottom: 3px; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 16px 0; line-height: 1.45; font-size: 11.5pt; page-break-inside: avoid; }
+  th, td { border: 1px solid #444; padding: 5px 8px; text-align: left; vertical-align: top; }
+  th { background: #e8e8e8; }
+  .gantt td.bar { background: #9db8d9; }
+  .gantt td, .gantt th { text-align: center; font-size: 10.5pt; padding: 4px 3px; }
+  .gantt td.task { text-align: left; }
+  .arch { width: 100%; margin: 12px 0; }
+  .arch .box { border: 1.5px solid #333; padding: 8px 10px; text-align: center; line-height: 1.45; font-size: 11.5pt; }
+  .arch .arrow { text-align: center; font-size: 14pt; line-height: 1.1; border: none; }
+  .arch td { border: none; }
+  .refs p { margin: 0 0 4px 0; padding-left: 24px; text-indent: -24px; line-height: 1.6; text-align: left; }
+  .sig { margin-top: 34px; line-height: 1.6; }
+  .sig td { border: none; padding-top: 26px; }
+  .small { font-size: 11pt; }
+  .note { font-size: 11pt; font-style: italic; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<!-- ============================ TITLE PAGE ============================ -->
+<div class="title-page">
+  <div class="ptitle"><b>MobileBazaar: Design and Development of a Single-Vendor E-Commerce Web Application for Mobile Phones in Pakistan</b></div>
+
+  <div class="monogram">[University Monogram]</div>
+
+  <div class="tp-label">A Final Year Project Proposal</div>
+
+  <div class="tp-label">Submitted By</div>
+  <div class="tp-name">[Student Full Name]</div>
+  <div>Registration No: [____________]</div>
+  <div>Class / Semester: BS Software Engineering, [__ Semester]</div>
+
+  <div class="tp-label">Supervisor</div>
+  <div class="tp-name">[Supervisor Name]</div>
+  <div>[Designation, e.g. Lecturer]</div>
+
+  <div class="tp-dept">Department of [____________________]<br>University of Swat</div>
+  <div class="tp-label">Session: [20____ – 20____]</div>
+</div>
+
+<div style="page-break-before: always;"></div>
+
+<!-- ============================ ABSTRACT ============================ -->
+<h1 class="sec">Abstract</h1>
+<p>This proposal presents the design and development of <b>MobileBazaar</b>, a single-vendor e-commerce web application dedicated exclusively to mobile phones for the Pakistani market. Online shopping in Pakistan is growing rapidly, yet the purchase of mobile phones online remains difficult: buyers must search across general marketplaces, price-comparison sites and informal social-media sellers, with no single trusted platform that combines verified specifications, transparent variant-wise pricing (storage and RAM), PTA (Pakistan Telecommunication Authority) approval information, instalment (EMI) estimates and cash-on-delivery ordering in one place. The proposed system will provide a mobile-first storefront with faceted search and filtering, side-by-side comparison of up to three phones, detailed product pages with grouped technical specifications, a guest checkout with cash on delivery as the primary payment method (with simulated JazzCash, EasyPaisa and bank-transfer options), order tracking, and a complete administration panel for catalogue, inventory and order management with sales reporting. The system will be developed using Next.js and TypeScript with a Supabase (PostgreSQL) back end, following an Agile iterative methodology, and will be evaluated through black-box functional testing and a System Usability Scale (SUS) study. The expected outcome is a fully working, documented and deployable web application that demonstrates how a focused, trust-centred design can improve the online mobile-phone buying experience in Pakistan.</p>
+<p class="small"><b>Keywords:</b> E-commerce; Mobile phones; Web application; Next.js; Supabase; Cash on delivery; Pakistan.</p>
+
+<!-- ============================ 1 INTRODUCTION ============================ -->
+<h1 class="sec">1. Introduction</h1>
+<p>E-commerce has become an important channel of trade in Pakistan. Market research on Pakistani e-commerce reports that the large majority of online shoppers browse and buy through smartphones, and that cash on delivery (COD) accounts for roughly three-quarters of online payment volume, because a large part of the population does not use credit or debit cards for online purchases (PCMI, 2024). International payment gateways that dominate Western e-commerce, such as Stripe and PayPal, do not operate for Pakistani merchants, so local online stores must be designed around COD and local mobile wallets (JazzCash and EasyPaisa) from the beginning.</p>
+<p>Within this market, the mobile phone is one of the most frequently purchased and most researched products. A phone is a high-involvement purchase: buyers compare display, chipset, camera, battery, RAM and storage variants before deciding, and prices in Pakistan vary widely — from under Rs 20,000 for entry-level devices to over Rs 500,000 for flagships. Buyers also need assurance on two Pakistan-specific concerns: whether the device is PTA approved (registered through the Device Identification Registration and Blocking System, DIRBS, operated by the Pakistan Telecommunication Authority) and whether it carries an official local warranty (PTA, n.d.).</p>
+
+<h2 class="sub">1.1 Existing Systems</h2>
+<p>Three categories of existing systems serve this need only partially. General marketplaces such as Daraz sell phones among thousands of unrelated categories, with inconsistent specification data and pricing that varies by seller. Price-comparison sites such as PriceOye aggregate prices well but do not themselves complete the purchase with managed delivery, order tracking and after-sales workflow. Brand stores and informal sellers on social media offer no structured comparison, no standardised specifications, and little buyer protection. International research also shows that an average of about 70% of online shopping carts are abandoned, most commonly because of unexpected extra costs shown late in checkout (Baymard Institute, 2024) — a problem that a transparent, COD-first design can directly address.</p>
+
+<table>
+  <tr><th style="width:26%">Criterion</th><th>General Marketplace</th><th>Price-Comparison Site</th><th>Proposed System (MobileBazaar)</th></tr>
+  <tr><td>Phones-only catalogue</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+  <tr><td>Variant-wise prices (RAM/storage)</td><td>Inconsistent</td><td>Partial</td><td>Yes, per variant</td></tr>
+  <tr><td>Side-by-side comparison</td><td>Limited</td><td>Yes (prices only)</td><td>Yes — full specifications with best-value highlights</td></tr>
+  <tr><td>PTA / warranty information</td><td>Seller-dependent</td><td>Partial</td><td>Shown on every product</td></tr>
+  <tr><td>EMI (instalment) estimate</td><td>Bank-dependent</td><td>No</td><td>Yes, on every product</td></tr>
+  <tr><td>Guest checkout with COD</td><td>Account usually required</td><td>Not applicable</td><td>Yes</td></tr>
+  <tr><td>Order tracking</td><td>Yes</td><td>No</td><td>Yes — 5-stage status timeline</td></tr>
+</table>
+
+<h2 class="sub">1.2 Problem Statement</h2>
+<p>A Pakistani customer who wants to buy a mobile phone online today faces a fragmented and low-trust process: specifications must be verified on one site, prices compared on another, PTA status checked separately through the DIRBS service, and the final order placed with a seller whose stock, warranty and delivery process are unclear. There is no single, phones-only platform, designed for Pakistani payment and trust realities (COD first, mobile-first browsing, PTA and warranty transparency), that carries the buyer from discovery and comparison to checkout and delivery tracking in one flow. This project will design and develop such a system and evaluate its usability.</p>
+
+<!-- ============================ 2 AIMS AND OBJECTIVES ============================ -->
+<h1 class="sec">2. Aims and Objectives</h1>
+<p>The aim of this project is to design, develop and evaluate a mobile-first, single-vendor e-commerce web application for mobile phones that is tailored to the Pakistani market, in order to make phone buying simpler, more transparent and more trustworthy for customers, and manageable for the store owner through a complete administration panel. The specific objectives of the project are:</p>
+<ol type="i">
+  <li>to analyse the requirements of Pakistani online phone buyers and of a single-vendor store owner, and to document them in a Software Requirements Specification (SRS);</li>
+  <li>to design the system architecture, database (Entity Relationship Diagram) and user flows for the storefront and administration modules;</li>
+  <li>to develop a mobile-first storefront with faceted search and filtering (brand, price range, RAM, storage, camera, 5G), curated product lists and detailed product pages with colour and storage/RAM variants at per-variant prices;</li>
+  <li>to implement a side-by-side comparison feature for up to three phones, with grouped specifications and automatic best-value indicators;</li>
+  <li>to implement a shopping cart and a guest checkout with cash on delivery as the primary payment method and simulated JazzCash, EasyPaisa and bank-transfer options, together with customer order tracking;</li>
+  <li>to develop an administration panel for product and variant management, inventory (stock) control, order-status management and sales reporting;</li>
+  <li>to display Pakistan-specific trust information on products — PTA approval status, official warranty and EMI (monthly instalment) estimates;</li>
+  <li>to test the system using black-box functional test cases and to evaluate its usability with end users through the System Usability Scale (SUS) questionnaire.</li>
+</ol>
+
+<!-- ============================ 3 SCOPE ============================ -->
+<h1 class="sec">3. Scope of the Project</h1>
+<h2 class="sub">3.1 In Scope</h2>
+<ul>
+  <li>A single-vendor, phones-only catalogue of approximately 40–60 mobile phones from 8–10 brands, each with variants (colour, RAM, storage), per-variant pricing and stock levels.</li>
+  <li>Storefront: home page with curated lists, shop page with search, filters and sorting, product detail pages with grouped specifications and customer reviews, and a comparison tool for up to three devices.</li>
+  <li>Cart, guest checkout (no compulsory registration), order confirmation and order tracking with a five-stage status timeline (Placed, Confirmed, Packed, Shipped, Delivered).</li>
+  <li>Payments: cash on delivery as a fully working method; JazzCash, EasyPaisa and bank transfer as clearly-labelled simulated methods (pending merchant verification).</li>
+  <li>Administration panel: secure login, dashboard with sales key performance indicators, product and inventory management, order management and sales reports.</li>
+  <li>Deployment on the public internet (Vercel) with a cloud PostgreSQL database (Supabase).</li>
+</ul>
+<h2 class="sub">3.2 Out of Scope</h2>
+<ul>
+  <li>Real payment-gateway integration (requires a registered business and merchant approval, which is not available for a student project); payments other than COD will be simulated.</li>
+  <li>Multi-vendor marketplace functionality, native mobile applications (Android/iOS), and real courier-API integration (delivery status will be managed by the administrator).</li>
+  <li>Automated web scraping of specifications; catalogue data will be entered and verified manually against manufacturer and GSMArena data, with sources cited.</li>
+</ul>
+
+<!-- ============================ 4 PROPOSED SYSTEM ============================ -->
+<h1 class="sec">4. Proposed System</h1>
+<h2 class="sub">4.1 Functionalities and Modules</h2>
+<p><b>Customer (storefront) module:</b> browse and search the catalogue; filter by brand, price bucket, RAM, storage, camera and 5G; sort by price, rating and popularity; view product details with variant selection, EMI estimate and reviews; compare up to three phones; manage a cart; check out as a guest; and track an order by its order ID.</p>
+<p><b>Administration module:</b> sign in securely; view a dashboard (revenue, orders, average order value, payment-method mix, low-stock alerts); add, edit and delete products and variants; adjust prices and stock; search, sort and update the status of orders; and view sales reports.</p>
+<h2 class="sub">4.2 System Architecture</h2>
+<p>The system will follow a three-tier architecture. The presentation tier is a Next.js (React) web application rendered on the server for fast first loads and search-engine visibility, styled with a custom design system and fully responsive for mobile, tablet and desktop. The application/data tier is provided by Supabase: a PostgreSQL database accessed through a REST interface, with Row Level Security policies controlling which records guests, customers and administrators may read or write. The application will be deployed on Vercel, which serves the Next.js application globally.</p>
+<table class="arch">
+  <tr><td><div class="box"><b>Presentation Tier</b><br>Next.js 15 + TypeScript web application (storefront, cart, checkout, tracking, admin panel) — accessed through any modern web browser</div></td></tr>
+  <tr><td class="arrow">&#8595;</td></tr>
+  <tr><td><div class="box"><b>Application &amp; Data Tier</b><br>Supabase — PostgreSQL database (phones, variants, orders, order items, profiles), authentication, Row Level Security, file storage</div></td></tr>
+  <tr><td class="arrow">&#8595;</td></tr>
+  <tr><td><div class="box"><b>Hosting</b><br>Vercel (application hosting and deployment); free tiers are sufficient for this project's scale</div></td></tr>
+</table>
+<h2 class="sub">4.3 Database Design</h2>
+<p>The database will be modelled around a Product &#8594; Variants relationship: one phone (product) has several purchasable variants, each with its own SKU, storage, RAM, price and stock count — matching how phones are actually sold. Supporting tables will include orders, order items, user profiles (with an administrator flag) and reviews. The complete Entity Relationship Diagram will be produced in the design phase of the project.</p>
+
+<!-- ============================ 5 METHODOLOGY ============================ -->
+<h1 class="sec">5. Methodology / Plan of Work</h1>
+<p>The project will be developed using an <b>Agile iterative methodology</b>, organised into short sprints, so that a working version of the system exists from an early stage and can be refined on the basis of feedback. Requirements will be gathered from an analysis of existing Pakistani e-commerce platforms, published market research and standard e-commerce usability research. Each sprint will end with a tested, demonstrable increment. The planned sprints are:</p>
+<table>
+  <tr><th style="width:22%">Sprint</th><th>Planned Work</th></tr>
+  <tr><td>Sprint 1 — Foundation</td><td>Project setup; design system; data layer; home page and shop page with search, filters and sorting.</td></tr>
+  <tr><td>Sprint 2 — Buying Flow</td><td>Product detail pages; cart; guest checkout (COD); order confirmation and order tracking.</td></tr>
+  <tr><td>Sprint 3 — Administration</td><td>Admin login; dashboard; order management; product and stock management; sales reports; database schema with Row Level Security.</td></tr>
+  <tr><td>Sprint 4 — Cloud Integration</td><td>Connection of the live cloud database (Supabase) to the storefront; mirroring of orders into the database; deployment.</td></tr>
+  <tr><td>Sprint 5 — Refinement</td><td>Usability-driven refinements; complete catalogue management (add/edit/delete devices); loading states and performance polish.</td></tr>
+  <tr><td>Final Phase</td><td>Black-box testing, SUS usability evaluation, documentation (SRS, design documents, user manual) and final presentation.</td></tr>
+</table>
+<p><b>Testing plan:</b> functional (black-box) test cases will be written for every major feature, including boundary cases (e.g. quantity limits, free-delivery threshold, out-of-stock variants and invalid phone numbers at checkout). Usability will be evaluated with the System Usability Scale questionnaire administered to a small group of target users after task-based sessions.</p>
+
+<h2 class="sub">5.1 Tools and Technologies</h2>
+<table>
+  <tr><th style="width:30%">Component</th><th>Technology</th></tr>
+  <tr><td>Front-end framework</td><td>Next.js 15 (App Router) with React and TypeScript</td></tr>
+  <tr><td>Styling</td><td>Custom CSS design system (no heavy UI framework, for performance)</td></tr>
+  <tr><td>Back end / database</td><td>Supabase — PostgreSQL, Auth, Storage, Row Level Security</td></tr>
+  <tr><td>Hosting / deployment</td><td>Vercel</td></tr>
+  <tr><td>Development tools</td><td>Visual Studio Code, Git and GitHub, Node.js</td></tr>
+  <tr><td>Design and documentation</td><td>Figma (wireframes), draw.io (ERD/DFD), MS Word</td></tr>
+  <tr><td>Hardware</td><td>A standard laptop (8 GB RAM or above) and a smartphone for mobile testing</td></tr>
+</table>
+
+<h2 class="sub">5.2 Work Plan (Gantt Chart)</h2>
+<table class="gantt">
+  <tr><th class="task" style="width:34%">Activity</th><th>W1–2</th><th>W3–4</th><th>W5–6</th><th>W7–8</th><th>W9–10</th><th>W11–12</th><th>W13–14</th><th>W15–16</th></tr>
+  <tr><td class="task">Requirement analysis &amp; SRS</td><td class="bar"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td class="task">System &amp; database design (ERD/DFD)</td><td></td><td class="bar"></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td class="task">Sprint 1–2: Storefront &amp; buying flow</td><td></td><td></td><td class="bar"></td><td class="bar"></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td class="task">Sprint 3–4: Admin panel &amp; cloud database</td><td></td><td></td><td></td><td></td><td class="bar"></td><td class="bar"></td><td></td><td></td></tr>
+  <tr><td class="task">Sprint 5: Refinement &amp; deployment</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="bar"></td><td></td></tr>
+  <tr><td class="task">Testing &amp; usability evaluation</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="bar"></td><td class="bar"></td></tr>
+  <tr><td class="task">Documentation &amp; final presentation</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="bar"></td></tr>
+</table>
+
+<!-- ============================ 6 SOCIO-ECONOMIC ============================ -->
+<h1 class="sec">6. Socio-Economic Benefit / Significance of the Outcomes</h1>
+<p>The proposed system has direct practical significance for the local economy. Small and medium mobile-phone retailers in regions such as Khyber Pakhtunkhwa currently depend on walk-in customers and informal social-media selling; a ready, low-cost e-commerce system of this kind shows how such a retailer can reach customers across Pakistan with no shop-expansion cost, using payment methods (COD and mobile wallets) that match local habits. For customers, transparent variant pricing, PTA and warranty information and instalment estimates reduce the risk of overpaying or buying non-approved devices — a common cause of loss, since non-PTA devices stop working on Pakistani networks. Academically, the project demonstrates the complete software-engineering lifecycle — requirements, design, iterative development, cloud deployment, security policies and usability evaluation — on a realistic, locally relevant problem.</p>
+
+<!-- ============================ 7 EXPECTED OUTCOMES ============================ -->
+<h1 class="sec">7. Expected Outcomes and Deliverables</h1>
+<ol type="i">
+  <li>a fully working, publicly deployed e-commerce web application (MobileBazaar) with storefront, comparison, cart, guest COD checkout, order tracking and administration panel;</li>
+  <li>a documented cloud database with security policies, seeded with a verified catalogue of mobile phones and variants;</li>
+  <li>project documentation: SRS, ERD and DFD diagrams, black-box test cases with results, a SUS usability evaluation report, and a user manual;</li>
+  <li>the complete source code, maintained in a version-controlled repository.</li>
+</ol>
+
+<h2 class="sub">7.1 Estimated Budget</h2>
+<table>
+  <tr><th>Item</th><th style="width:30%">Estimated Cost (PKR)</th></tr>
+  <tr><td>Hosting (Vercel) and database (Supabase) — free tiers</td><td>0</td></tr>
+  <tr><td>Development tools (VS Code, Git, Figma) — free tiers</td><td>0</td></tr>
+  <tr><td>Optional custom domain (per year)</td><td>3,000 – 5,000</td></tr>
+  <tr><td>Printing and binding of the final report</td><td>2,000 – 3,000</td></tr>
+  <tr><td><b>Total (estimated)</b></td><td><b>5,000 – 8,000</b></td></tr>
+</table>
+
+<!-- ============================ REFERENCES ============================ -->
+<h1 class="sec">References</h1>
+<div class="refs">
+<p>Baymard Institute. (2024). <i>Cart abandonment rate statistics</i>. https://baymard.com/lists/cart-abandonment-rate</p>
+<p>DataReportal. (2024). <i>Digital 2024: Pakistan</i>. https://datareportal.com/reports/digital-2024-pakistan</p>
+<p>GSMArena. (n.d.). <i>Mobile phone specifications database</i>. https://www.gsmarena.com</p>
+<p>Pakistan Telecommunication Authority. (n.d.). <i>Device Identification Registration and Blocking System (DIRBS)</i>. https://dirbs.pta.gov.pk</p>
+<p>PCMI. (2024). <i>E-commerce data library: Pakistan</i>. Payments and Commerce Market Intelligence.</p>
+<p>Supabase. (2025). <i>Supabase documentation</i>. https://supabase.com/docs</p>
+<p>Vercel. (2025). <i>Next.js documentation</i>. https://nextjs.org/docs</p>
+</div>
+
+<!-- ============================ SIGNATURES ============================ -->
+<table class="sig">
+  <tr>
+    <td style="width:50%">_________________________<br><b>[Student Full Name]</b><br>Student Signature &amp; Date</td>
+    <td>_________________________<br><b>[Supervisor Name]</b><br>Supervisor Signature &amp; Date</td>
+  </tr>
+</table>
+<p class="note">Note: This proposal follows the Approved Uniform Format for Synopses of the University of Swat (title page, Introduction, Aims and Objectives numbered in Roman numerals, Methodology/Plan of Work, Socio-Economic Benefit/Significance, and References in APA style; A4 paper, Times New Roman 12, margins: top 1&#8243;, bottom 1&#8243;, left 1.5&#8243;, right 1&#8243;).</p>
+
+</body>
+</html>
